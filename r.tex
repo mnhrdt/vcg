@@ -108,7 +108,7 @@ GTTI 30/11/2016
 \end{frame}
 
 \begin{frame}[fragile]\begin{verbatim}CONCLUSION
-==========
+v=========
 
 
 1. The design of ad-hoc finite difference schemes
@@ -177,6 +177,19 @@ Horrific finite difference scheme {\rm \textnumero} 2\\
 ======================================\\
 $ $\\
 {\rm\tiny\color{gray}
+J.~Weickert, K.~Hagenburg, M.~Breuß, and O.~Vogel\\
+\emph{Linear Osmosis Models for Visual Computing}
+2013 \\
+}
+	\fbox{\includegraphics[width=0.65\linewidth]{f/divud.png}}
+	\fbox{\includegraphics[width=0.65\linewidth]{f/divud2.png}}
+\end{frame}
+
+\begin{frame}\tt
+Horrific finite difference scheme {\rm \textnumero} 3\\
+======================================\\
+$ $\\
+{\rm\tiny\color{gray}
 J.~Weickert, M.~Welk, M.~Wickert\\
 \emph{$L^2$-Stable Nonstandard Finite Differences for Anisotropic Diffusion}
 2013
@@ -185,8 +198,9 @@ J.~Weickert, M.~Welk, M.~Wickert\\
 \fbox{\includegraphics[width=0.85\linewidth]{f/weickerthell.png}}
 \end{frame}
 
+
 \begin{frame}\tt
-(Not so much) horrific finite difference scheme {\rm \textnumero} 3\\
+(Not so much) horrific finite difference scheme {\rm \textnumero} 4\\
 ====================================================\\
 $ $\\
 {\rm\tiny\color{gray}
@@ -403,78 +417,78 @@ The graph matrices $A$, $B$, $C$, and $L$ can be interpreted as linear
 \scriptsize\tt
 %\renewcommand{\arraystretch}{1.4}
 \setlength{\extrarowheight}{3pt}
-%\begin{tabular}{l|l|b{0.3\textwidth}}
-%	\bf vector calculus & \bf graph theory & \bf octave code \\
-%	\hline
-%	euclidean plane $\R^2$ & graph $G=(V,E)$ &
-%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-%		G = sparse(m,n);
-%	\end{minted}
-%	\\
-%	$p\in\R^2$ & $p\in V$ &
-%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-%		i = randi(1, n);
-%	\end{minted}
-%	\\
-%	$v_p\in T_p\R^2$ & $v=(p,q)\in E$ &
-%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-%		j = randi(1, m);
-%	\end{minted}
-%	\\
-%	$f:\R^2\to\R$ & $f:V\to\R$ &
-%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-%		f = rand(1, n);
-%	\end{minted}
-%	\\
-%	$G:\R^2\to\R^2$ & $G:E\to\R$ &
-%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-%		G = rand(1, m);
-%	\end{minted}
-%	\\
-%	$\mathfrak{X}^0\quad$ \color{gray}(functions) & $\R^n$ & \\
-%	$\mathfrak{X}^1\quad$ \color{gray}(fields) & $\R^m$ & \\
-%	$\nabla:\mathfrak{X}^0\to\mathfrak{X}^1$ & $B:\R^n\to\R^m$ &
-%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-%		B = incidence(G);
-%	\end{minted}
-%	\\
-%	$\mathrm{div}:\mathfrak{X}^1\to\mathfrak{X}^0$ & $-B^T:\R^m\to\R^n$ &
-%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-%		-B'
-%	\end{minted}
-%	\\
-%	$\Delta:\mathfrak{X}^0\to\mathfrak{X}^0$ & $-B^TB:\R^n\to\R^n$ &
-%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-%		L = -B'*B;
-%	\end{minted}
-%	\\
-%	$\Omega\subseteq\R^2$, $\partial\Omega\subseteq\R^2$ & $\Omega\subseteq V$, $\partial\Omega\subseteq E$ &
-%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-%		M = O>0; dM = -B*M;
-%	\end{minted}
-%	\\
-%	$\int_\Omega f$ & ${\mathbbm{1}_\Omega}^T f = \left\langle\mathbbm{1}_\Omega,f\right\rangle$ &
-%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-%		M'*f
-%	\end{minted}
-%	\\
-%	$\int_{\partial\Omega}G=\int_\Omega\mathrm{div}G$ &
-%	$\left\langle -B\mathbbm{1}_{\Omega},G\right\rangle=\left\langle\mathbbm{1}_\Omega,-B^TG\right\rangle$ &
-%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-%		(-B'*M)'*G == M'*(-B'*G)
-%	\end{minted}
-%	\\
-%	$fg$ & $f\odot g$ &
-%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-%		f .* g == diag(f) * g
-%	\end{minted}
-%	\\
-%	$\nabla(fg)=f\nabla g+g\nabla f$ & $B(f\odot g)= ?$ &
-%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-%		B * diag(f) * g == ?
-%	\end{minted}
-%	\\
-%\end{tabular}
+\begin{tabular}{l|l|b{0.3\textwidth}}
+	\bf vector calculus & \bf graph theory & \bf octave code \\
+	\hline
+	euclidean plane $\R^2$ & graph $G=(V,E)$ &
+	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+		G = sparse(m,n);
+	\end{minted}
+	\\
+	$p\in\R^2$ & $p\in V$ &
+	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+		i = randi(1, n);
+	\end{minted}
+	\\
+	$v_p\in T_p\R^2$ & $v=(p,q)\in E$ &
+	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+		j = randi(1, m);
+	\end{minted}
+	\\
+	$f:\R^2\to\R$ & $f:V\to\R$ &
+	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+		f = rand(1, n);
+	\end{minted}
+	\\
+	$G:\R^2\to\R^2$ & $G:E\to\R$ &
+	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+		G = rand(1, m);
+	\end{minted}
+	\\
+	$\mathfrak{X}^0\quad$ \color{gray}(functions) & $\R^n$ & \\
+	$\mathfrak{X}^1\quad$ \color{gray}(fields) & $\R^m$ & \\
+	$\nabla:\mathfrak{X}^0\to\mathfrak{X}^1$ & $B:\R^n\to\R^m$ &
+	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+		B = incidence(G);
+	\end{minted}
+	\\
+	$\mathrm{div}:\mathfrak{X}^1\to\mathfrak{X}^0$ & $-B^T:\R^m\to\R^n$ &
+	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+		-B'
+	\end{minted}
+	\\
+	$\Delta:\mathfrak{X}^0\to\mathfrak{X}^0$ & $-B^TB:\R^n\to\R^n$ &
+	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+		L = -B'*B;
+	\end{minted}
+	\\
+	$\Omega\subseteq\R^2$, $\partial\Omega\subseteq\R^2$ & $\Omega\subseteq V$, $\partial\Omega\subseteq E$ &
+	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+		M = O>0; dM = -B*M;
+	\end{minted}
+	\\
+	$\int_\Omega f$ & ${\mathbbm{1}_\Omega}^T f = \left\langle\mathbbm{1}_\Omega,f\right\rangle$ &
+	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+		M'*f
+	\end{minted}
+	\\
+	$\int_{\partial\Omega}G=\int_\Omega\mathrm{div}G$ &
+	$\left\langle -B\mathbbm{1}_{\Omega},G\right\rangle=\left\langle\mathbbm{1}_\Omega,-B^TG\right\rangle$ &
+	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+		(-B'*M)'*G == M'*(-B'*G)
+	\end{minted}
+	\\
+	$fg$ & $f\odot g$ &
+	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+		f .* g == diag(f) * g
+	\end{minted}
+	\\
+	$\nabla(fg)=f\nabla g+g\nabla f$ & $B(f\odot g)= ?$ &
+	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+		B * diag(f) * g == ?
+	\end{minted}
+	\\
+\end{tabular}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -950,7 +964,7 @@ EXAMPLE: smoothing the streets of London
 tau = 0.24;
 h = heights
 for i = 1:9
-	h += tau * (L * h);
+        h += tau * (L * h);
 end
 \end{minted}
 
@@ -965,13 +979,84 @@ B = sqrt(weights) .* (Bto - Bfrom);
 \vfill
 \end{frame}
 
-
 \begin{frame}[fragile]
 \begin{verbatim}
 EXAMPLE: Poisson equation with Dirichlet B.C.
 =============================================
 
 \end{verbatim}
+\tiny\tt
+\begin{tabular}{cc}
+	\includegraphics[height=0.3\textheight]{lenasky/crop_lenasky_boundary.png} &
+	\includegraphics[height=0.3\textheight]{lenasky/crop_minuslap.png} \\
+	boundary condition &
+	laplacian \\
+	& \\
+	& \\
+	& \\
+	\includegraphics[height=0.3\textheight]{lenasky/miniercode.png} &
+	\includegraphics[height=0.3\textheight]{lenasky/crop_result.png} \\
+	poisson solver &
+	result \\
+\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{verbatim}
+EXAMPLE: Poisson equation with Dirichlet B.C.
+=============================================
+
+\end{verbatim}\tt
+\begin{minted}[frame=single,fontsize=\tiny]{octave}
+# read input
+f = imread("lena.png");
+g = imread("landscape.png");
+[w,h] = size(g);
+f = double(f(:));
+g = double(g(:));
+
+# build mask operator
+M = spdiags(g==0, 0, w*h, w*h);
+
+# build laplacian operator on the whole image
+px = sparse(1:w-1, 2:w, 1, w, w);
+py = sparse(1:h-1, 2:h, 1, h, h);
+G = kron(py,speye(w)) + kron(speye(h),px);
+L = G + G' - diag(sum(G + G'));
+
+# compute laplacian of the image to paste
+Lf = L*f;
+
+# state the problem
+I = speye(w*h)
+A =  I - M    - M*L ;
+b = (I - M)*g - M*Lf;
+
+# solve the problem
+x = A\b;
+
+# write output
+imwrite(uint8(reshape(x,w,h)), "out.png");
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{verbatim}
+EXAMPLE: Weickert's "non-standard" scheme
+=========================================
+
+\end{verbatim}\tt
+
+\vfill
+
+\fbox{\includegraphics[width=0.85\linewidth]{f/divud2.png}}
+
+\vfill
+
+This is simply $$d=\frac{1}{Cv}\odot Bv$$
+
+\vfill
+
 \end{frame}
 
 \begin{frame}[fragile]

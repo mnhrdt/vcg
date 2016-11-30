@@ -1,0 +1,14 @@
+f = imread("image.png");
+g = imread("boundary.png");
+[w,h] = size(g);
+f = double(f(:));
+g = double(g(:));
+M = spdiags(g==0, 0, w*h, w*h);
+px = sparse(1:w-1, 2:w, 1, w, w);
+py = sparse(1:h-1, 2:h, 1, h, h);
+G = kron(py,speye(w)) + kron(speye(h),px);
+L = G + G' - diag(sum(G + G'));
+A =  speye(w*h) - M    - M*L  ;
+b = (speye(w*h) - M)*g - M*L*f;
+x = A\b;
+imwrite(uint8(reshape(x,w,h)), "out.png");
