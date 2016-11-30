@@ -158,7 +158,7 @@ B*(f.*g) == (B*f).*(C*g) + (C*f).*(B*g)
 \end{minted}
 \\
 $\mathrm{div}(f\mathbf{g})=f\mathrm{div}(\mathbf{g})+\nabla f\cdot\mathbf{g}$ &
-$-B^T(Cf\odot\mathbf{g})= f\odot C^T(-B^T\mathbf{g})+C^T\left(Bf\odot\mathbf{g}\right)$ &
+$-B^T(Cf\odot\mathbf{g})= f\odot (-B^T\mathbf{g})+C^T\left(Bf\odot\mathbf{g}\right)$ &
 \begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
 -B'*((C*f).*g) == ...
 \end{minted}
