@@ -32,7 +32,6 @@
 \def\FFT{\mathtt{FFT}}
 \def\IFFT{\mathtt{IFFT}}
 \DeclareMathOperator*{\argmin}{arg\,min}
-\DeclareMathOperator*{\patch}{patch}
 
 % disable spacing around verbatim
 \usepackage{etoolbox}
@@ -148,17 +147,16 @@ sparse matrices.  Write your code as short as possible.
 
 2. The correspondence between calculus and graph theory
 
-    2.1. Scalar and vector fields
-    2.2. Derivatives
-    2.3. Integrals
-    2.4. Variational calculus
-    2.5. Local weights (``anisotropy'')
-
 
 \end{verbatim}\tt
 \only<1>{3. Some clean finite difference schemes}
 \only<2>{\St{3. Some clean finite difference schemes}\\
 3. The same horrific schemes written in clean notation}
+%    2.1. Scalar and vector fields
+%    2.2. Derivatives
+%    2.3. Integrals
+%    2.4. Variational calculus
+%    2.5. Local weights (``anisotropy'')
 \end{frame}
 
 \begin{frame}\tt
@@ -178,15 +176,30 @@ V.~Caselles, G.~Facciolo, E.~ Meinhardt,
 Horrific finite difference scheme {\rm \textnumero} 2\\
 ======================================\\
 $ $\\
-(poisson example)
+{\rm\tiny\color{gray}
+J.~Weickert, M.~Welk, M.~Wickert\\
+\emph{$L^2$-Stable Nonstandard Finite Differences for Anisotropic Diffusion}
+2013
+	\\
+}
+\fbox{\includegraphics[width=0.85\linewidth]{f/weickerthell.png}}
 \end{frame}
 
 \begin{frame}\tt
-Horrific finite difference scheme {\rm \textnumero} 3\\
-======================================\\
+(Not so much) horrific finite difference scheme {\rm \textnumero} 3\\
+====================================================\\
 $ $\\
-(osmosis example)
+{\rm\tiny\color{gray}
+M.~di Martino, G.~Facciolo, E.~Meinhardt-Llopis\\
+\emph{Poisson Image Editing}, IPOL 2016
+	\\
+}
+
+\bigskip
+
+\fbox{\includegraphics[width=0.95\linewidth]{f/poissonmatias.png}}
 \end{frame}
+
 
 %\begin{frame}[plain]\tt
 %	\vfill
@@ -261,6 +274,128 @@ $ $\\
 \end{frame}
 
 \begin{frame}[fragile]
+\begin{verbatim}
+RECALL OF VECTOR CALCULUS
+=========================
+\end{verbatim}
+\tt
+\setlength{\extrarowheight}{4pt}
+\begin{tabular}{r|l}
+	functions &
+	$f:\R^2\to\R$
+	\\
+	vector fields &
+	$\mathbf{v}:\R^2\to\R^2$
+	\\
+	gradient &
+	$\nabla f=(f_x,f_y)$
+	\\
+	divergence&
+	$\mathrm{div}(a,b)=a_x+b_y$
+	\\
+	laplacian&
+	$\Delta f = \mathrm{div}(\nabla f) = f_{xx}+g_{yy}$
+	\\
+	product rule for gradient&
+	$\nabla(fg)=f\nabla g+g\nabla f$
+	\\
+	product rule for divergence&
+	$\mathrm{div}(f\mathbf{g})=f\mathrm{div}(\mathbf{g})+\mathbf{g}\cdot\nabla f$
+	\\
+	integral of $f$ on a domain&
+	$\int_\Omega f$
+	\\
+	flux of $\mathbf{v}$ across a curve&
+	$\int_S \mathbf{v}\cdot\mathbf{ds}$
+	\\
+	divergence theorem&
+	$\int_{\partial\Omega}\mathbf{v}\cdot\mathbf{ds}=\int_\Omega\mathrm{div}(\mathbf{v})$
+	\\
+	energy functional &
+	$E(u)=\int_\Omega L(u,Du,D^2u,\ldots)$
+	\\
+	Euler-Lagrange &
+	$E'(u)=\frac{\partial L}{\partial u}
+	-\mathrm{div}\frac{\partial L}{\partial D u}
+	+\nabla^2\frac{\partial L}{\partial D^2 u}
+	-\cdots$
+	\\
+\end{tabular}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{verbatim}
+RECALL OF GRAPH THEORY
+======================
+
+\end{verbatim}\tt
+
+	A graph is $G=(V,E)$ where~$V\subseteq E\times E$.\\
+	It is not directed: $(x,y)\in E\implies (y,x)\in E$.\\
+	There are no loops~$(x,x)\not\in E$.
+
+	\bigskip
+
+	$n=\#V\ $ number of vertices,
+	$\qquad V=\{1,\ldots,n\}$\\
+	$m=\#E/2\ $ number of edges,
+	$\qquad E=\{1,\ldots,m\}$\\
+
+	\bigskip
+
+	$A$ adjacency matrix ($n\times n$)\\
+	$B$ signed incidence matrix ($m\times n$)\\
+	$C=\frac{1}{2}|B|$ unsigned incidence matrix ($m\times n$)\\
+	$L=-B^TB$ laplacian matrix ($n\times n$)
+
+	\bigskip
+
+	\pause
+	\color{red}
+	$\R^n$ functions defined on vertices\\
+	$\R^m$ functions defined on edges\\
+
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{verbatim}
+RECALL OF ALGEBRAIC GRAPH THEORY
+================================
+
+\end{verbatim}\tt
+
+{\bf Observation:}
+The graph matrices $A$, $B$, $C$, and $L$ can be interpreted as linear
+	operators.
+\bigskip
+
+	Let~$f\in\R^n$ and~$\mathbf{g}\in\R^m$.  Then
+	\medskip
+
+	$Bf\in\R^m$ : $Bf(a,b) = f(b)-f(a)$\\
+
+	\medskip
+
+	$Cf\in\R^m$ : $\displaystyle Bf(a,b) = \frac{f(b)+f(a)}{2}$\\
+
+	\medskip
+
+	$Lf\in\R^n$ : $\displaystyle Lf(a) = \sum_{b\in N(a)}f(b)-f(a)$\\
+
+	\medskip
+
+	$-B^T\mathbf{g}\in\R^n$ : $-B^T\mathbf{g}(a)
+	=\sum_{(a,b)\in E}\mathbf{v}(a,b)
+	-\sum_{(b,a)\in E}\mathbf{v}(b,a)$
+
+	\vfill
+{\bf Observation 2:} From any of these matrices one can build all the others.
+
+\end{frame}
+
+
+\begin{frame}[fragile]
 \begin{verbatim}THE CONTINUOUS / DISCRETE CORRESPONDENCE
 ========================================
 
@@ -268,78 +403,78 @@ $ $\\
 \scriptsize\tt
 %\renewcommand{\arraystretch}{1.4}
 \setlength{\extrarowheight}{3pt}
-\begin{tabular}{l|l|b{0.3\textwidth}}
-	\bf vector calculus & \bf graph theory & \bf octave code \\
-	\hline
-	euclidean plane $\R^2$ & graph $G=(V,E)$ &
-	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-		G = sparse(m,n);
-	\end{minted}
-	\\
-	$p\in\R^2$ & $p\in V$ &
-	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-		i = randi(1, n);
-	\end{minted}
-	\\
-	$v_p\in T_p\R^2$ & $v=(p,q)\in E$ &
-	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-		j = randi(1, m);
-	\end{minted}
-	\\
-	$f:\R^2\to\R$ & $f:V\to\R$ &
-	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-		f = rand(1, n);
-	\end{minted}
-	\\
-	$G:\R^2\to\R^2$ & $G:E\to\R$ &
-	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-		G = rand(1, m);
-	\end{minted}
-	\\
-	$\mathfrak{X}^0\quad$ \color{gray}(functions) & $\R^n$ & \\
-	$\mathfrak{X}^1\quad$ \color{gray}(fields) & $\R^m$ & \\
-	$\nabla:\mathfrak{X}^0\to\mathfrak{X}^1$ & $B:\R^n\to\R^m$ &
-	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-		B = incidence(G);
-	\end{minted}
-	\\
-	$\mathrm{div}:\mathfrak{X}^1\to\mathfrak{X}^0$ & $-B^T:\R^m\to\R^n$ &
-	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-		-B'
-	\end{minted}
-	\\
-	$\Delta:\mathfrak{X}^0\to\mathfrak{X}^0$ & $-B^TB:\R^n\to\R^n$ &
-	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-		L = -B'*B;
-	\end{minted}
-	\\
-	$\Omega\subseteq\R^2$, $\partial\Omega\subseteq\R^2$ & $\Omega\subseteq V$, $\partial\Omega\subseteq E$ &
-	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-		M = O>0; dM = -B*M;
-	\end{minted}
-	\\
-	$\int_\Omega f$ & ${\mathbbm{1}_\Omega}^T f = \left\langle\mathbbm{1}_\Omega,f\right\rangle$ &
-	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-		M'*f
-	\end{minted}
-	\\
-	$\int_{\partial\Omega}G=\int_\Omega\mathrm{div}G$ &
-	$\left\langle -B\mathbbm{1}_{\Omega},G\right\rangle=\left\langle\mathbbm{1}_\Omega,-B^TG\right\rangle$ &
-	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-		(-B'*M)'*G == M'*(-B'*G)
-	\end{minted}
-	\\
-	$fg$ & $f\odot g$ &
-	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-		f .* g == diag(f) * g
-	\end{minted}
-	\\
-	$\nabla(fg)=f\nabla g+g\nabla f$ & $B(f\odot g)= ?$ &
-	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-		B * diag(f) * g == ?
-	\end{minted}
-	\\
-\end{tabular}
+%\begin{tabular}{l|l|b{0.3\textwidth}}
+%	\bf vector calculus & \bf graph theory & \bf octave code \\
+%	\hline
+%	euclidean plane $\R^2$ & graph $G=(V,E)$ &
+%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+%		G = sparse(m,n);
+%	\end{minted}
+%	\\
+%	$p\in\R^2$ & $p\in V$ &
+%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+%		i = randi(1, n);
+%	\end{minted}
+%	\\
+%	$v_p\in T_p\R^2$ & $v=(p,q)\in E$ &
+%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+%		j = randi(1, m);
+%	\end{minted}
+%	\\
+%	$f:\R^2\to\R$ & $f:V\to\R$ &
+%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+%		f = rand(1, n);
+%	\end{minted}
+%	\\
+%	$G:\R^2\to\R^2$ & $G:E\to\R$ &
+%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+%		G = rand(1, m);
+%	\end{minted}
+%	\\
+%	$\mathfrak{X}^0\quad$ \color{gray}(functions) & $\R^n$ & \\
+%	$\mathfrak{X}^1\quad$ \color{gray}(fields) & $\R^m$ & \\
+%	$\nabla:\mathfrak{X}^0\to\mathfrak{X}^1$ & $B:\R^n\to\R^m$ &
+%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+%		B = incidence(G);
+%	\end{minted}
+%	\\
+%	$\mathrm{div}:\mathfrak{X}^1\to\mathfrak{X}^0$ & $-B^T:\R^m\to\R^n$ &
+%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+%		-B'
+%	\end{minted}
+%	\\
+%	$\Delta:\mathfrak{X}^0\to\mathfrak{X}^0$ & $-B^TB:\R^n\to\R^n$ &
+%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+%		L = -B'*B;
+%	\end{minted}
+%	\\
+%	$\Omega\subseteq\R^2$, $\partial\Omega\subseteq\R^2$ & $\Omega\subseteq V$, $\partial\Omega\subseteq E$ &
+%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+%		M = O>0; dM = -B*M;
+%	\end{minted}
+%	\\
+%	$\int_\Omega f$ & ${\mathbbm{1}_\Omega}^T f = \left\langle\mathbbm{1}_\Omega,f\right\rangle$ &
+%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+%		M'*f
+%	\end{minted}
+%	\\
+%	$\int_{\partial\Omega}G=\int_\Omega\mathrm{div}G$ &
+%	$\left\langle -B\mathbbm{1}_{\Omega},G\right\rangle=\left\langle\mathbbm{1}_\Omega,-B^TG\right\rangle$ &
+%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+%		(-B'*M)'*G == M'*(-B'*G)
+%	\end{minted}
+%	\\
+%	$fg$ & $f\odot g$ &
+%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+%		f .* g == diag(f) * g
+%	\end{minted}
+%	\\
+%	$\nabla(fg)=f\nabla g+g\nabla f$ & $B(f\odot g)= ?$ &
+%	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
+%		B * diag(f) * g == ?
+%	\end{minted}
+%	\\
+%\end{tabular}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -430,322 +565,411 @@ DIFFERENTIAL GEOMETRY ON GRAPHS
 \end{tabular}
 \end{frame}
 
-\begin{frame}[fragile]
-\begin{verbatim}
-RECALL OF VECTOR CALCULUS
-=========================
-
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-RECALL OF GRAPH THEORY
-======================
-
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-RECALL OF ALGEBRAIC GRAPH THEORY
-================================
-
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-ALGEBRAIC GRAPH THEORY IN MATLAB/OCTAVE
-=======================================
-
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-CORRESPONDENCE: points,vectors = vertices,edges
-===============================================
-
-\end{verbatim}\tt
-\begin{columns}[t,totalwidth=\linewidth]
-%	\begin{column}{0.5\linewidth}
-%		abc
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%ALGEBRAIC GRAPH THEORY IN MATLAB/OCTAVE
+%=======================================
 %
-%		lorem ipsum dolor si amet lorem ipsum dolor si amet lorem ipsum
-%		dolor si amet lorem ipsum dolor si amet lorem ipsum dolor si amet
-%		lorem ipsum dolor si amet lorem ipsum dolor si amet lorem ipsum
-%		dolor si amet lorem ipsum dolor si amet lorem ipsum dolor si amet
-%		lorem ipsum dolor si amet lorem ipsum dolor si amet lorem ipsum
-%		dolor si amet lorem ipsum dolor si amet lorem ipsum dolor si amet
+%\end{verbatim}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: points,vectors = vertices,edges
+%===============================================
+%
+%\end{verbatim}\tt
+%\begin{columns}[t,totalwidth=\linewidth]
+%%	\begin{column}{0.5\linewidth}
+%%		abc
+%%
+%%		lorem ipsum dolor si amet lorem ipsum dolor si amet lorem ipsum
+%%		dolor si amet lorem ipsum dolor si amet lorem ipsum dolor si amet
+%%		lorem ipsum dolor si amet lorem ipsum dolor si amet lorem ipsum
+%%		dolor si amet lorem ipsum dolor si amet lorem ipsum dolor si amet
+%%		lorem ipsum dolor si amet lorem ipsum dolor si amet lorem ipsum
+%%		dolor si amet lorem ipsum dolor si amet lorem ipsum dolor si amet
+%%	\end{column}
+%%	\begin{column}{0.5\linewidth}
+%%		lorem ipsum dolor si amet lorem ipsum dolor si amet lorem ipsum
+%%		dolor si amet lorem ipsum dolor si amet lorem ipsum dolor si amet
+%%		lorem ipsum dolor si amet lorem ipsum dolor si amet lorem ipsum
+%%		dolor si amet lorem ipsum dolor si amet lorem ipsum dolor si amet
+%%		lorem ipsum dolor si amet lorem ipsum dolor si amet lorem ipsum
+%%		dolor si amet lorem ipsum dolor si amet lorem ipsum dolor si amet
+%%	\end{column}
+%	\begin{column}{0.5\linewidth}
+%		plane $\R^2$
+%
+%		point $p\in\R^2$
+%
+%		vector $v_p\in T_p\R^2$
+%
+%		\bigskip
+%
+%		(figure of a tangent vector on a surface)
+%	\end{column}
+%	\vrule{}
+%	\begin{column}{0.5\linewidth}
+%		graph $G=(V,E)$
+%
+%		vertex $p\in V$
+%
+%		edge $v=(p,q)\in E$
+%
+%		%\usemodule[tikz]
+%		\bigskip
+%
+%		(figure of a graph with stuff)
+%		\usetikzlibrary{graphs}
+%		\begin{tikzpicture}
+%			\graph[nodes={draw,circle},edges={>=latex}] {
+%				A [at={(0,0)}] -> {
+%					B [at={(2,0)}] -> C [at={(2,-2)}],
+%								  C -> D [at={(0,-2)},rectangle]
+%									  }
+%										};
+%		\end{tikzpicture}
+%	\end{column}
+%\end{columns}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: points,vectors = vertices,edges
+%===============================================
+%
+%\end{verbatim}\tt
+%\begin{tabular}{p{0.5\linewidth}|p{0.5\linewidth}}
+%	vector calculus & graph theory \\
+%	\hline
+%		plane $\R^2$
+%
+%		point $p\in\R^2$
+%
+%		vector $v_p\in T_p\R^2$
+%
+%		\bigskip
+%
+%		(figure of a tangent vector on a surface)
+%		&
+%		graph $G=(V,E)$
+%
+%		vertex $p\in V$
+%
+%		edge $v=(p,q)\in E$
+%
+%		%\usemodule[tikz]
+%		\bigskip
+%
+%		(figure of a graph with stuff)
+%		% tikz commented because it does not work
+%		%\usetikzlibrary{graphs}
+%		%\begin{tikzpicture}
+%		%	\graph[nodes={draw,circle},edges={>=latex}] {
+%		%		A [at={(0,0)}] -> {
+%		%			B [at={(2,0)}] -> C [at={(2,-2)}],
+%		%						  C -> D [at={(0,-2)},rectangle]
+%		%							  }
+%		%								};
+%		%\end{tikzpicture}
+%		\\
+%\end{tabular}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: scalar and vector fields
+%========================================
+%
+%\end{verbatim}\tt
+%\begin{columns}[t,totalwidth=\linewidth]
+%	\begin{column}{0.5\linewidth}
+%		scalar field $f:\R^2\to\R$
+%
+%		{\color{gray}(co)-}vector field $F:\R^2\to\R^2$
+%
+%		\bigskip
+%
+%		(figure of a scalar and a vector field on the plane)
 %	\end{column}
 %	\begin{column}{0.5\linewidth}
-%		lorem ipsum dolor si amet lorem ipsum dolor si amet lorem ipsum
-%		dolor si amet lorem ipsum dolor si amet lorem ipsum dolor si amet
-%		lorem ipsum dolor si amet lorem ipsum dolor si amet lorem ipsum
-%		dolor si amet lorem ipsum dolor si amet lorem ipsum dolor si amet
-%		lorem ipsum dolor si amet lorem ipsum dolor si amet lorem ipsum
-%		dolor si amet lorem ipsum dolor si amet lorem ipsum dolor si amet
+%		scalar field $f:V\to\R$
+%
+%		vector field $F:E\to\R$
+%
+%		$f\in\R^n\qquad F\in\R^m$
+%		\bigskip
+%
+%		(figure of a graph with numbers on edges and vertices)
 %	\end{column}
-	\begin{column}{0.5\linewidth}
-		plane $\R^2$
-
-		point $p\in\R^2$
-
-		vector $v_p\in T_p\R^2$
-
-		\bigskip
-
-		(figure of a tangent vector on a surface)
-	\end{column}
-	\vrule{}
-	\begin{column}{0.5\linewidth}
-		graph $G=(V,E)$
-
-		vertex $p\in V$
-
-		edge $v=(p,q)\in E$
-
-		%\usemodule[tikz]
-		\bigskip
-
-		(figure of a graph with stuff)
-		\usetikzlibrary{graphs}
-		\begin{tikzpicture}
-			\graph[nodes={draw,circle},edges={>=latex}] {
-				A [at={(0,0)}] -> {
-					B [at={(2,0)}] -> C [at={(2,-2)}],
-								  C -> D [at={(0,-2)},rectangle]
-									  }
-										};
-		\end{tikzpicture}
-	\end{column}
-\end{columns}
-\end{frame}
+%\end{columns}
+%	\color{gray}note on fields and forms
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: the gradient
+%============================
+%
+%\end{verbatim}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: the divergence
+%==============================
+%
+%\end{verbatim}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: the laplacian
+%=============================
+%
+%\end{verbatim}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: the centering operator
+%======================================
+%
+%\end{verbatim}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: the diffusion operator
+%======================================
+%
+%\end{verbatim}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: pointwise product / hadamard product
+%====================================================
+%
+%\end{verbatim}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: Leibniz rules
+%=============================
+%
+%\end{verbatim}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: integrals
+%=========================
+%
+%\end{verbatim}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: boundaries
+%==========================
+%
+%\end{verbatim}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: Stokes theorem
+%==============================
+%
+%\end{verbatim}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: partial differential equatio
+%==============================================
+%
+%\end{verbatim}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: Neumann boundary conditions
+%===========================================
+%
+%\end{verbatim}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: Dirichlet boundary conditions
+%=============================================
+%
+%\end{verbatim}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: the osmosis equation
+%====================================
+%
+%\end{verbatim}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%RECALL: minimzation of quadratic forms
+%======================================
+%
+%\end{verbatim}\tt
+%	Let $A\in\mathcal{M}_n(\R)$ be a symmetric positive definite matrix and let~$b\in\R^n$.  Then the function
+%	\begin{eqnarray*}
+%		f :& \R &\to \R\\
+%		   & x &\mapsto f(x)=\frac{1}{2}x^TAx-b^Tx
+%	\end{eqnarray*}
+%	has a unique minimum $x\in\R^n$.  Moreover, this minimum is the unique
+%	solution of the equation
+%	\[
+%		Ax=b
+%	\]
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: variational interpretation
+%==========================================
+%
+%\end{verbatim}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%CORRESPONDENCE: non-uniformities and anisotropies
+%=================================================
+%
+%\end{verbatim}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%SUCCESSFUL EXAMPLE: variational osmosis
+%=======================================
+%
+%\end{verbatim}
+%\end{frame}
 
 \begin{frame}[fragile]
 \begin{verbatim}
-CORRESPONDENCE: points,vectors = vertices,edges
-===============================================
-
-\end{verbatim}\tt
-\begin{tabular}{p{0.5\linewidth}|p{0.5\linewidth}}
-	vector calculus & graph theory \\
-	\hline
-		plane $\R^2$
-
-		point $p\in\R^2$
-
-		vector $v_p\in T_p\R^2$
-
-		\bigskip
-
-		(figure of a tangent vector on a surface)
-		&
-		graph $G=(V,E)$
-
-		vertex $p\in V$
-
-		edge $v=(p,q)\in E$
-
-		%\usemodule[tikz]
-		\bigskip
-
-		(figure of a graph with stuff)
-		% tikz commented because it does not work
-		%\usetikzlibrary{graphs}
-		%\begin{tikzpicture}
-		%	\graph[nodes={draw,circle},edges={>=latex}] {
-		%		A [at={(0,0)}] -> {
-		%			B [at={(2,0)}] -> C [at={(2,-2)}],
-		%						  C -> D [at={(0,-2)},rectangle]
-		%							  }
-		%								};
-		%\end{tikzpicture}
-		\\
-\end{tabular}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-CORRESPONDENCE: scalar and vector fields
+EXAMPLE: smoothing the streets of London
 ========================================
 
-\end{verbatim}\tt
-\begin{columns}[t,totalwidth=\linewidth]
-	\begin{column}{0.5\linewidth}
-		scalar field $f:\R^2\to\R$
+\end{verbatim}
 
-		{\color{gray}(co)-}vector field $F:\R^2\to\R^2$
+\tt Woolwich tunnel
 
-		\bigskip
-
-		(figure of a scalar and a vector field on the plane)
-	\end{column}
-	\begin{column}{0.5\linewidth}
-		scalar field $f:V\to\R$
-
-		vector field $F:E\to\R$
-
-		$f\in\R^n\qquad F\in\R^m$
-		\bigskip
-
-		(figure of a graph with numbers on edges and vertices)
-	\end{column}
-\end{columns}
-	\color{gray}note on fields and forms
+\only<1>{\includegraphics[height=0.7\textheight]{fb/woolwich_before.png}}%
+\only<2>{\includegraphics[height=0.7\textheight]{fb/woolwich_after.png}}%
 \end{frame}
 
 \begin{frame}[fragile]
 \begin{verbatim}
-CORRESPONDENCE: the gradient
-============================
+EXAMPLE: smoothing the streets of London
+========================================
 
 \end{verbatim}
+
+\tt Woolwich tunnel closeup
+
+\only<1>{\includegraphics[height=0.7\textheight]{fb/wool1_before.png}}%
+\only<2>{\includegraphics[height=0.7\textheight]{fb/wool1_after.png}}%
 \end{frame}
+
 
 \begin{frame}[fragile]
 \begin{verbatim}
-CORRESPONDENCE: the divergence
-==============================
+EXAMPLE: smoothing the streets of London
+========================================
 
 \end{verbatim}
+
+\tt Shooter's hill
+
+\only<1>{\includegraphics[height=0.7\textheight]{fb/hill_before.png}}%
+\only<2>{\includegraphics[height=0.7\textheight]{fb/hill_after.png}}%
 \end{frame}
 
 \begin{frame}[fragile]
 \begin{verbatim}
-CORRESPONDENCE: the laplacian
-=============================
+EXAMPLE: smoothing the streets of London
+========================================
 
 \end{verbatim}
+\begin{minted}[frame=single,fontsize=\tiny]{octave}
+# Process the London roadmap
+
+# 1. load the raw data of the graph
+nodes   = dlmread("nodes.txt");
+edges   = dlmread("roads.txt");
+heights = dlmread("heights.txt");
+
+# 2. extract raw data into user-friendly variables
+n = size(nodes, 1);      # number of vertices
+m = size(edges, 1);      # number of edges
+e_from = 1 + edges(:,2);
+e_to   = 1 + edges(:,3);
+
+# 3. build incidence matrix B
+Bfrom = sparse(1:m, e_from, 1, m, n);
+Bto   = sparse(1:m, e_to  , 1, m, n);
+B = Bto - Bfrom;
+
+# 4. build laplacian matrix L
+L = -B'*B;
+
+# 5. solve the heat equation
+t  = 1;
+h  = expm(t * L) * heights;
+
+# 6. save the result
+dlmwrite("heights_smooth.txt", h);
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]
 \begin{verbatim}
-CORRESPONDENCE: the centering operator
-======================================
+EXAMPLE: smoothing the streets of London
+========================================
 
 \end{verbatim}
+
+\begin{minted}[frame=single,fontsize=\small]{octave}
+# 5'. approximate the heat equation
+tau = 0.24;
+h = heights
+for i = 1:9
+	h += tau * (L * h);
+end
+\end{minted}
+
+\vfill
+
+\begin{minted}[frame=single,fontsize=\small]{octave}
+# 3'. weighted incidence matrix
+weights  = raw_edges(:,4);
+B = sqrt(weights) .* (Bto - Bfrom);
+\end{minted}
+
+\vfill
 \end{frame}
+
 
 \begin{frame}[fragile]
 \begin{verbatim}
-CORRESPONDENCE: the diffusion operator
-======================================
-
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-CORRESPONDENCE: pointwise product / hadamard product
-====================================================
-
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-CORRESPONDENCE: Leibniz rules
-=============================
-
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-CORRESPONDENCE: integrals
-=========================
-
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-CORRESPONDENCE: boundaries
-==========================
-
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-CORRESPONDENCE: Stokes theorem
-==============================
-
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-CORRESPONDENCE: partial differential equatio
-==============================================
-
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-CORRESPONDENCE: Neumann boundary conditions
-===========================================
-
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-CORRESPONDENCE: Dirichlet boundary conditions
+EXAMPLE: Poisson equation with Dirichlet B.C.
 =============================================
-
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-CORRESPONDENCE: the osmosis equation
-====================================
-
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-RECALL: minimzation of quadratic forms
-======================================
-
-\end{verbatim}\tt
-	Let $A\in\mathcal{M}_n(\R)$ be a symmetric positive definite matrix and let~$b\in\R^n$.  Then the function
-	\begin{eqnarray*}
-		f :& \R &\to \R\\
-		   & x &\mapsto f(x)=\frac{1}{2}x^TAx-b^Tx
-	\end{eqnarray*}
-	has a unique minimum $x\in\R^n$.  Moreover, this minimum is the unique
-	solution of the equation
-	\[
-		Ax=b
-	\]
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-CORRESPONDENCE: variational interpretation
-==========================================
-
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-CORRESPONDENCE: non-uniformities and anisotropies
-=================================================
-
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{verbatim}
-SUCCESSFUL EXAMPLE: variational osmosis
-=======================================
 
 \end{verbatim}
 \end{frame}
@@ -768,18 +992,18 @@ UNEXPECTED DIFFICULTIES: non-unique discretizations
 \end{enumerate}
 \end{frame}
 
-\begin{frame}[fragile]
-\begin{verbatim}
-ALTERNATIVE: NON-GRAPHICAL DISCRETIZATION
-=========================================
-
-Pixels are not a graph.
-
-They are very small squares on the plane.
-
-This plane is endowed with a piecewise constant metric.
-\end{verbatim}
-\end{frame}
+%\begin{frame}[fragile]
+%\begin{verbatim}
+%ALTERNATIVE: NON-GRAPHICAL DISCRETIZATION
+%=========================================
+%
+%Pixels are not a graph.
+%
+%They are very small squares on the plane.
+%
+%This plane is endowed with a piecewise constant metric.
+%\end{verbatim}
+%\end{frame}
 
 % missing frames
 %
