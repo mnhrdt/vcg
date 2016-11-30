@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc} % to be able to type unicode text directly
 \usepackage{inconsolata} % for a nicer (e.g. non-courier) tt family font
-\usepackage{mathptmx} % for times font
+\usepackage{mathptmx} % times font
 
 \usepackage{graphicx} % to include figures
 \usepackage{hyperref,url} % to make clickable hyperlinks
@@ -10,20 +10,15 @@
 \usepackage{bbm} % for blackboard 1
 \usepackage{amsfonts} % for \mathfrak and some symbols
 
-\colorlet{darkgreen}{black!50!green}
-\colorlet{ddarkgreen}{black!75!green}
-\colorlet{darkred}{black!50!red}
-\definecolor{ipol}{rgb}{.36,.29,.65}
-%\usecolortheme[named=ipol]{structure}
-\definecolor{term}{rgb}{.9,.9,.9}
+\definecolor{term}{rgb}{.9,.9,.9} % for background of code insets
 
+% coco's macros
 \def\R{\mathbf{R}}
 \def\F{\mathcal{F}}
 \def\x{\mathbf{x}}
 \def\u{\mathbf{u}}
-\def\FFT{\mathtt{FFT}}
-\def\IFFT{\mathtt{IFFT}}
 
+% set margins
 \addtolength{\voffset}{-8em}
 \addtolength{\textheight}{12em}
 \addtolength{\hoffset}{-9em}

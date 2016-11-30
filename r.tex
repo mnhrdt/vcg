@@ -5,33 +5,22 @@
 \usepackage{graphicx} % to include figures
 \usepackage{hyperref,url} % to make clickable hyperlinks
 \usepackage{minted} % for code insets
-\usepackage{array} %
+\usepackage{array} % to fine-tune tabular spacing
 \usepackage{bbm} % for blackboard 1
+\usepackage{soul} % for colored strikethrough
 
-\usepackage{tikz}
-
-\usepackage{soul}
-\usepackage{cancel}
-\renewcommand{\CancelColor}{\color{red}}
-
-\colorlet{darkgreen}{black!50!green}
-\colorlet{ddarkgreen}{black!75!green}
-\colorlet{darkred}{black!50!red}
-\definecolor{ipol}{rgb}{.36,.29,.65}
-\usecolortheme[named=ipol]{structure}
-\definecolor{term}{rgb}{.9,.9,.9}
+\colorlet{darkgreen}{black!50!green} % used for page numbers
+\definecolor{term}{rgb}{.9,.9,.9} % used for code insets
 
 \newcommand{\reference}[1] {{\scriptsize \color{gray}  #1 }}
 \newcommand{\referencep}[1] {{\tiny \color{gray}  #1 }}
 \newcommand{\unit}[1] {{\tiny \color{gray}  #1 }}
 
+% coco's macros
 \def\R{\mathbf{R}}
 \def\F{\mathcal{F}}
 \def\x{\mathbf{x}}
 \def\u{\mathbf{u}}
-\def\FFT{\mathtt{FFT}}
-\def\IFFT{\mathtt{IFFT}}
-\DeclareMathOperator*{\argmin}{arg\,min}
 
 % disable spacing around verbatim
 \usepackage{etoolbox}
@@ -39,6 +28,7 @@
 \preto{\@verbatim}{\topsep=0pt \partopsep=0pt }
 \makeatother
 
+% disable headings, set slide numbers in green
 \mode<presentation>
 \setbeamercolor*{author in head/foot}{parent=none}
 \setbeamercolor*{title in head/foot}{parent=none}
@@ -51,6 +41,7 @@
   \vskip0pt%
 }
 
+% select red color for strikethrough
 \makeatletter
 \newcommand\SoulColor{%
   \let\set@color\beamerorig@set@color
@@ -62,8 +53,7 @@
 \mode<all>
 \setbeamertemplate{navigation symbols}{}
 
-%\setbeamersize{text margin left=1em,text margin right=1em} (does not work)
-%\setbeamersize{text margin left=1em}
+
 
 
 \begin{document}
@@ -399,7 +389,7 @@ The graph matrices $A$, $B$, $C$, and $L$ can be interpreted as linear
 
 	\medskip
 
-	$-B^T\mathbf{g}\in\R^n$ : $-B^T\mathbf{g}(a)
+	$\displaystyle -B^T\mathbf{g}\in\R^n$ : $-B^T\mathbf{g}(a)
 	=\sum_{(a,b)\in E}\mathbf{v}(a,b)
 	-\sum_{(b,a)\in E}\mathbf{v}(b,a)$
 
@@ -422,7 +412,7 @@ The graph matrices $A$, $B$, $C$, and $L$ can be interpreted as linear
 	\hline
 	euclidean plane $\R^2$ & graph $G=(V,E)$ &
 	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-		G = sparse(m,n);
+		A = sparse(m,n);
 	\end{minted}
 	\\
 	$p\in\R^2$ & $p\in V$ &
@@ -449,7 +439,7 @@ The graph matrices $A$, $B$, $C$, and $L$ can be interpreted as linear
 	$\mathfrak{X}^1\quad$ \color{gray}(fields) & $\R^m$ & \\
 	$\nabla:\mathfrak{X}^0\to\mathfrak{X}^1$ & $B:\R^n\to\R^m$ &
 	\begin{minted}[bgcolor=term,fontsize=\tiny]{octave}
-		B = incidence(G);
+		B = incidence(A);
 	\end{minted}
 	\\
 	$\mathrm{div}:\mathfrak{X}^1\to\mathfrak{X}^0$ & $-B^T:\R^m\to\R^n$ &
