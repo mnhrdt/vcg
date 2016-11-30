@@ -24,12 +24,13 @@
 \def\FFT{\mathtt{FFT}}
 \def\IFFT{\mathtt{IFFT}}
 
-\addtolength{\voffset}{-4em}
-\addtolength{\textheight}{8em}
-\addtolength{\hoffset}{-8em}
+\addtolength{\voffset}{-8em}
+\addtolength{\textheight}{12em}
+\addtolength{\hoffset}{-9em}
 \addtolength{\textwidth}{12em}
 
 \begin{document}
+\thispagestyle{empty}
 
 {\bf A Rosetta stone for vector calculus on graphs}
 
@@ -137,7 +138,7 @@ S'*v
 $\int_{\partial\Omega}\mathbf{v}=\int_\Omega\mathrm{div}(\mathbf{v})$ &
 $\left\langle -B\mathbbm{1}_{\Omega},\mathbf{v}\right\rangle=\left\langle\mathbbm{1}_\Omega,-B^T\mathbf{v}\right\rangle$ &
 \begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
-(-B'*M)'*v == M'*(-B'*v)
+(-B*M)'*v == M'*(-B'*v)
 \end{minted}
 \\
 pointwise product $fg$ & Hadamard product $f\odot g$ &
@@ -145,7 +146,7 @@ pointwise product $fg$ & Hadamard product $f\odot g$ &
 f .* g == diag(f) * g
 \end{minted}
 \\
-pointwise product $f\mathbf{g}$ & Hadamard product $(Cf)\odot g$ &
+pointwise product $f\mathbf{g}$ & Hadamard product $(Cf)\odot\mathbf{g}$ &
 \begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
 (C*f).*g
 \end{minted}
@@ -184,9 +185,31 @@ u'*B'*B*u
 anisotropy $\mathrm{div}(D\mathbf{v})$ &
 $-B^TDB\mathbf{v},\qquad D\in\mathcal{M}_{2,2}$ &
 \begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
-$-B'*D*B*v$
+-B'*D*B*v
 \end{minted}
 \\
+\end{tabular}
+
+\bigskip
+
+\begin{tabular}{l|l}
+\bf differential geometry & \bf graph theory \\
+\hline
+manifold $M$ & graph $G=(V,E)$
+\\
+point $p\in M$ &
+vertex $p\in V$
+\\
+tangent vector $v_p\in T_p'M$ &
+edge $v=(p,q)\in E$
+\\
+	base space $M$ & set of vertices $V$ \\
+	tangent bundle $T'M$ & set of edges $E$ \\
+	functions $\Omega^0(M)$ & $\R^V$ \\
+	1-forms $\Omega^1(M)$ & $\R^E$ \\
+	p-forms $\Omega^p(M)$ & $\R^{\{p-1\ \textrm{cliques of G}\}}$ \\
+	$d:\Omega^p(M)\to\Omega^{p+1}(M)$ & $B^{\wedge p}$ {\color{gray}(what does it mean???}) \\
+	exterior algebra & Whitney clique complex \\
 \end{tabular}
 
 \end{document}
