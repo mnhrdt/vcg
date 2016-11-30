@@ -1,0 +1,161 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc} % to be able to type unicode text directly
+\usepackage{inconsolata} % for a nicer (e.g. non-courier) tt family font
+\usepackage{mathptmx} % for times font
+
+\usepackage{graphicx} % to include figures
+\usepackage{hyperref,url} % to make clickable hyperlinks
+\usepackage{minted} % for code insets
+\usepackage{array} %
+\usepackage{bbm} % for blackboard 1
+\usepackage{amsfonts} % for \mathfrak and some symbols
+
+\colorlet{darkgreen}{black!50!green}
+\colorlet{ddarkgreen}{black!75!green}
+\colorlet{darkred}{black!50!red}
+\definecolor{ipol}{rgb}{.36,.29,.65}
+%\usecolortheme[named=ipol]{structure}
+\definecolor{term}{rgb}{.9,.9,.9}
+
+\def\R{\mathbf{R}}
+\def\F{\mathcal{F}}
+\def\x{\mathbf{x}}
+\def\u{\mathbf{u}}
+\def\FFT{\mathtt{FFT}}
+\def\IFFT{\mathtt{IFFT}}
+
+\addtolength{\voffset}{-4em}
+\addtolength{\textheight}{8em}
+\addtolength{\hoffset}{-8em}
+\addtolength{\textwidth}{12em}
+
+\begin{document}
+
+{\bf A Rosetta stone for vector calculus on graphs}
+
+Let $G=(V,E)$ be a graph with $n=\#V$ vertices and $m=\#E$ edges.
+
+There is a natural correspondence between~$G$ and the euclidean plane.
+
+\bigskip
+
+\setlength{\extrarowheight}{3pt}
+\begin{tabular}{l|l|b{0.33\textwidth}}
+\bf vector calculus & \bf graph theory & \bf octave code \\
+\hline
+euclidean plane $\R^2$ & graph $G=(V,E)$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+A = sparse(m,n); % adjacency matrix
+\end{minted}
+\\
+point $p\in\R^2$ & vertex $p\in V$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+i = randi(1, n);
+\end{minted}
+\\
+tangent vector $v_p\in T_p\R^2$ & edge $v=(p,q)\in E$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+j = randi(1, m);
+\end{minted}
+\\
+scalar function $u:\R^2\to\R$ & $u:V\to\R,\qquad u\in\R^n$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+u = rand(1, n);
+\end{minted}
+\\
+vector field $\mathbf{v}:\R^2\to\R^2$ & $\mathbf{v}:E\to\R,\qquad\mathbf{v}\in\R^m$&
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+v = rand(1, m);
+\end{minted}
+\\
+$\mathfrak{X}^0\quad$ \color{gray}(functions) & $\R^n$ & \\
+$\mathfrak{X}^1\quad$ \color{gray}(fields) & $\R^m$ & \\
+gradient operator $\nabla:\mathfrak{X}^0\to\mathfrak{X}^1$ &
+incidence matrix $B:\R^n\to\R^m$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+B = incidence(A);
+\end{minted}
+\\
+divergence operator $\mathrm{div}:\mathfrak{X}^1\to\mathfrak{X}^0$ &
+transposed incidence $-B^T:\R^m\to\R^n$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+-B'
+\end{minted}
+\\
+laplacian operator $\Delta:\mathfrak{X}^0\to\mathfrak{X}^0$ &
+laplacian matrix $L:\R^n\to\R^n,\quad L=-B^TB$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+L = -B'*B;
+\end{minted}
+\\
+$\ ?$ &
+	centering operator $C:\R^n\to\R^m,\quad C=\frac{1}{2}|B|$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+C = abs(B)/2;
+\end{minted}
+\\
+$\ ?$ &
+recentering operator $C^T:\R^m\to\R^n$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+C'
+\end{minted}
+\\
+unit smoothing $g_1*:\mathfrak{X}^0\to\mathfrak{X}^0$ &
+smoothing operator $C^TC:\R^n\to\R^n$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+C'*C
+\end{minted}
+\\
+directional derivative $\nabla f(a)\cdot(v_a)$ &
+$(Bf)(v)$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+(B*f)(v)
+\end{minted}
+\\
+domain $\Omega\subseteq\R^2$ & $\Omega\subseteq V,\quad\mathbbm{1}_\Omega\in\R^n$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+M = O>0;
+\end{minted}
+\\
+oriented boundary $\partial\Omega\subseteq\R^2$ & $\partial\Omega=E\cap(\Omega\times\Omega^c)\subseteq E,\quad \mathbbm{1}_{\partial\Omega}\in\R^m$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+dM = -B*M;
+\end{minted}
+\\
+$\int_\Omega f$ & ${\mathbbm{1}_\Omega}^T f = \left\langle\mathbbm{1}_\Omega,f\right\rangle$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+M'*f
+\end{minted}
+\\
+$\int_{\partial\Omega}\mathbf{v}=\int_\Omega\mathrm{div}(\mathbf{v})$ &
+$\left\langle -B\mathbbm{1}_{\Omega},\mathbf{v}\right\rangle=\left\langle\mathbbm{1}_\Omega,-B^T\mathbf{v}\right\rangle$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+(-B'*M)'*v == M'*(-B'*v)
+\end{minted}
+\\
+pointwise product $fg$ & Hadamard product $f\odot g$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+f .* g == diag(f) * g
+\end{minted}
+\\
+pointwise product $f\mathbf{g}$ & Hadamard product $(Cf)\odot g$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+(C*f).*g
+\end{minted}
+\\
+$\nabla(fg)=f\nabla g+g\nabla f$ &
+$B(f\odot g)= Bf\odot Cg+Cf\odot Bg$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+B*(f.*g) == (B*f).*(C*g) + (C*f).*(B*g)
+\end{minted}
+\\
+$\mathrm{div}(f\mathbf{g})=f\mathrm{div}(\mathbf{g})+\nabla f\cdot\mathbf{g}$ &
+$-B^T(Cf\odot\mathrm{g})= f\odot C^T(-B^T\mathbf{g})+C^T\left(Bf\odot\mathbf{g}\right)$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+-B'*((C*f).*g) == ...
+\end{minted}
+\\
+\end{tabular}
+
+\end{document}
+% vim:sw=4 ts=4 spell spelllang=en:
