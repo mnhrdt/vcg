@@ -106,10 +106,10 @@ smoothing operator $C^TC:\R^n\to\R^n$ &
 C'*C
 \end{minted}
 \\
-directional derivative $\nabla f(a)\cdot(v_a)$ &
-$(Bf)(v)$ &
+directional derivative $\nabla f(a)\cdot(e_a)$ &
+$(Bf)(e)$ &
 \begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
-(B*f)(v)
+(B*f)(e)
 \end{minted}
 \\
 domain $\Omega\subseteq\R^2$ & $\Omega\subseteq V,\quad\mathbbm{1}_\Omega\in\R^n$ &
@@ -117,14 +117,21 @@ domain $\Omega\subseteq\R^2$ & $\Omega\subseteq V,\quad\mathbbm{1}_\Omega\in\R^n
 M = O>0;
 \end{minted}
 \\
-oriented boundary $\partial\Omega\subseteq\R^2$ & $\partial\Omega=E\cap(\Omega\times\Omega^c)\subseteq E,\quad \mathbbm{1}_{\partial\Omega}\in\R^m$ &
+oriented boundary $\partial\Omega\subseteq\R^2$ & $\partial\Omega=E\cap(\Omega\times\Omega^c)\subseteq E,\quad \mathbbm{1}_{\partial\Omega}=-B\mathbbm{1}_\Omega\in\R^m$ &
 \begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
 dM = -B*M;
 \end{minted}
 \\
-$\int_\Omega f$ & ${\mathbbm{1}_\Omega}^T f = \left\langle\mathbbm{1}_\Omega,f\right\rangle$ &
+integral over a domain $\int_\Omega f$ &
+${\mathbbm{1}_\Omega}^T f = \left\langle\mathbbm{1}_\Omega,f\right\rangle_{\R^n}$ &
 \begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
 M'*f
+\end{minted}
+\\
+flux accross a curve $\int_{S}\mathbf{v}\cdot\mathbf{ds}$ &
+${\mathbbm{1}_S}^T\mathbf{v} = \left\langle\mathbbm{1}_S,\mathbf{v}\right\rangle_{\R^m}$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+S'*v
 \end{minted}
 \\
 $\int_{\partial\Omega}\mathbf{v}=\int_\Omega\mathrm{div}(\mathbf{v})$ &
@@ -150,9 +157,34 @@ B*(f.*g) == (B*f).*(C*g) + (C*f).*(B*g)
 \end{minted}
 \\
 $\mathrm{div}(f\mathbf{g})=f\mathrm{div}(\mathbf{g})+\nabla f\cdot\mathbf{g}$ &
-$-B^T(Cf\odot\mathrm{g})= f\odot C^T(-B^T\mathbf{g})+C^T\left(Bf\odot\mathbf{g}\right)$ &
+$-B^T(Cf\odot\mathbf{g})= f\odot C^T(-B^T\mathbf{g})+C^T\left(Bf\odot\mathbf{g}\right)$ &
 \begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
 -B'*((C*f).*g) == ...
+\end{minted}
+\\
+&&\\
+elliptic PDE $A[u]=f$ &
+linear system $Au=f$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+u = A\f;
+\end{minted}
+\\
+parabolic PDE $u_t=A[u]$ &
+first order linear ODE system $u_t=Au$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+u = expm(t*A)*u0;
+\end{minted}
+\\
+$\int\|\nabla u\|^2$ &
+$(Bu)^T(Bu)=u^TB^TBu$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+u'*B'*B*u
+\end{minted}
+\\
+anisotropy $\mathrm{div}(D\mathbf{v})$ &
+$-B^TDB\mathbf{v},\qquad D\in\mathcal{M}_{2,2}$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+$-B'*D*B*v$
 \end{minted}
 \\
 \end{tabular}
