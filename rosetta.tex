@@ -177,10 +177,16 @@ $(Bu)^T(Bu)=u^TB^TBu$ &
 u'*B'*B*u
 \end{minted}
 \\
-anisotropy $\mathrm{div}(D\mathbf{v}),\qquad D\in\mathcal{M}_{2,2}$ &
-$-B^TDB\mathbf{v}$ &
+anisotropy $\|D\mathbf{v}\|,\qquad D\in\mathcal{M}_{2,2}$ &
+$\mathbf{v}^TD^TD\mathbf{v}$ &
 \begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
--B'*D*B*v
+v'*D'*D*v
+\end{minted}
+\\
+inhomogeneity $h\|\mathbf{v}\|,\qquad h\in\mathfrak{X}^0$ &
+$\mathbf{v}^T(Cg)\mathbf{v}$ &
+\begin{minted}[bgcolor=term,fontsize=\footnotesize]{octave}
+v'*diag(C*g)*v
 \end{minted}
 \\
 \end{tabular}
